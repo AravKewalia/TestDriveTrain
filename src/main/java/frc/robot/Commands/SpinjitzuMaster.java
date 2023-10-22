@@ -13,26 +13,30 @@ public class SpinjitzuMaster extends CommandBase
     private  double P, I, D;
     private  double error;
     private double previousError;
-    public SpinjitzuMaster(double speed, double kP, double kI)
+    public SpinjitzuMaster(double speed, double kP, double kI) 
     {
         this.kP = kP;
         this.kI = kI;
         this.speed = speed;
-        addRequirements(Robot.getDrivebase());
-
-        
+        addRequirements(Robot.getDrivebase());    
     }
 
     @Override
     public void initialize()
     {
-        Robot.LloydKaiJayZaneColeNyaNavx.reset();
+        Robot.NAVX.reset();
     }
 
     @Override
     public boolean isFinished()
     {
-        return Robot.XBOX_CONTROLLER.getLeftBumperPressed();
+        System.out.println(Robot.aButton.getAsBoolean());
+        return Robot.aButton.getAsBoolean();
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        Robot.getDrivebase().arcadeDrive(0, P+I+D);
     }
 
     @Override
